@@ -4,7 +4,8 @@ const chromedriver = require("chromedriver")
 interface Options {
     driver?: WebDriver;
     /* if no driver is supplied, we make one or use the constructor to make one */
-    url?: string;
+    url?: string; 
+    /* oh my gosh samezies*/
 }
 
 export class BasePage {
@@ -25,16 +26,17 @@ export class BasePage {
             "BasePage.navigate() needs a url defined on the page objects, or one passed in."
         )
     }
+
     async getElement(elementBy: By): Promise<WebElement> {
-        await this.driver.wait(until.elementLocated(elementBy))
+        await this.driver.wait(until.elementLocated(elementBy));
         let element = await this.driver.findElement(elementBy);
         await this.driver.wait(until.elementIsVisible(element))
-        return element
+        return element;
     }
     async click(elementBy: By): Promise<void> {
         return(await this.getElement(elementBy)).click();
     }
-    async setInput(elementBy: By, keys: any): Promise<void> {
+    async setInput(elementBy:By, keys: any): Promise<void> {
         let input = await this.getElement(elementBy);
         await input.clear();
         return input.sendKeys(keys)
@@ -43,6 +45,6 @@ export class BasePage {
         return (await this.getElement(elementBy)).getText()
     }
     async getAttribute(elementBy: By, attribute: string): Promise<string> {
-        return(await this.getElement(elementBy)).getAttribute(attribute)
+        return (await this.getElement(elementBy)).getAttribute(attribute)
     }
 }
